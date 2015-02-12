@@ -1,0 +1,9 @@
+
+bin/*
+h4a/bin/*
+h4a/lib/*
+h4a/obj/*
+
+*.exe
+*.dll
+*.log
