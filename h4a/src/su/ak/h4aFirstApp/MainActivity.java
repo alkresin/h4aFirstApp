@@ -19,7 +19,6 @@ import android.text.style.UnderlineSpan;
 public class MainActivity extends Activity
 {
 
-    public static Harbour harb;
     private TextView mOutputView;
 
     public static int iHrbMod;
@@ -32,26 +31,22 @@ public class MainActivity extends Activity
         setContentView(R.layout.main);
         mOutputView = (TextView)findViewById(R.id.output_view);
 
-        harb = new Harbour( this );
-
-        harb.vmInit();
-        harb.CopyFromAsset();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        CharSequence stext = setSpans( harb.hrbOpen(), "**" );
+        CharSequence stext = setSpans( MainApp.harb.hrbOpen(), "**" );
         mOutputView.setText( stext );
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        harb.vmQuit();
+        //harb.vmQuit();
         //System.runFinalizersOnExit(true);
-        android.os.Process.killProcess(android.os.Process.myPid());
+        //android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     private CharSequence setSpans( CharSequence text, String token )

@@ -14,7 +14,7 @@ public class DopActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String sText = MainActivity.harb.hrbMod(MainActivity.iHrbMod);
+        String sText = MainApp.harb.hrbMod(MainActivity.iHrbMod);
 
         setTitle(MainActivity.sHrbName);
         if( sText.length() > 4 && sText.substring( 0,5 ).equals( "<html" ) ) {
