@@ -2,6 +2,8 @@ package su.ak.h4aFirstApp;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
@@ -99,5 +101,23 @@ public class MainActivity extends Activity
            Intent intent = new Intent( MainActivity.this, DopActivity.class );
            startActivity(intent);
         }
-}
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(Menu.NONE, 1, Menu.NONE, "Exit");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case 1:
+            android.os.Process.killProcess(android.os.Process.myPid());
+            return true;
+
+        default:
+            return false;
+      }
+    }
 }

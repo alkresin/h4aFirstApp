@@ -2,11 +2,13 @@ package su.ak.h4aFirstApp;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.content.Context;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
+import android.webkit.JavascriptInterface;
 
 public class DopActivity extends Activity {
 
@@ -19,16 +21,18 @@ public class DopActivity extends Activity {
         setTitle(MainActivity.sHrbName);
         if( sText.length() > 4 && sText.substring( 0,5 ).equals( "<html" ) ) {
 
-           WebView mWebView = new WebView(this);
+           WebView web = new WebView(this);
 
-           WebSettings websettings = mWebView.getSettings();
-           websettings.setBuiltInZoomControls(true);
-           websettings.setJavaScriptEnabled(true);
+           WebSettings settings = web.getSettings();
+           settings.setBuiltInZoomControls(false);
+           settings.setJavaScriptEnabled(true);
 
-           mWebView.setWebViewClient( new MyWebViewClient() );
+           web.setWebViewClient( new MyWebViewClient() );
 
-           mWebView.loadDataWithBaseURL(null, sText, "text/html", "utf-8", null);
-           setContentView(mWebView);
+           web.addJavascriptInterface(new JSProxy(this), "jProxy");
+
+           web.loadDataWithBaseURL(null, sText, "text/html", "utf-8", null);
+           setContentView(web);
 
         } else {
            ScrollView sv = new ScrollView(this);
@@ -51,4 +55,17 @@ public class DopActivity extends Activity {
         }
     }
 
+    private class JSProxy {
+
+       private Context context = null;
+
+       public JSProxy(Context c) {
+           context = c;
+       }
+
+       @JavascriptInterface
+       public String getInfo(String message) {
+           return MainApp.harb.Calc(message);
+       }
+    }
 }

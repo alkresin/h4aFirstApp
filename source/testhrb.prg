@@ -10,7 +10,6 @@ FUNCTION FModList()
           "Mod **Update program**" + Chr(13)+Chr(10)
 
 FUNCTION FModExec( iMod )
-   local lres
 
    IF iMod == 1
       RETURN FMod1()
@@ -28,10 +27,6 @@ FUNCTION FMod1()
 
    LOCAL sRet := "", cPath := "//95.80.77.43:2812/", aInfo, nSec, nDay, nHour
 
-   IF !h4a_isInternetOn()
-       RETURN "Internet connection is absent"
-   ENDIF
-   
    IF ( leto_Connect( cPath ) ) == -1
        RETURN "LetoDb server on " + cPath + " is currently unavailable"
    ENDIF
@@ -55,14 +50,10 @@ FUNCTION FMod1()
    leto_DisConnect()
 
    RETURN sRet
-   
+
 FUNCTION FMod2()
 
    LOCAL sRet, cPath := "//95.80.77.43:2812/"
-
-   IF !h4a_isInternetOn()
-       RETURN "Internet connection is absent"
-   ENDIF
 
    IF ( leto_Connect( cPath ) ) == -1
        RETURN "LetoDb server on " + cPath + " is currently unavailable"
@@ -91,24 +82,26 @@ FUNCTION FMod3()
 
    LOCAL sRet, i
 
+   IF !__mvExist( "H4AVERSION" )
+      RETURN "You need to get the latest h4aFirstApp.apk to see this section!"
+   ENDIF
+
+   h4a_Wrlog("Mod3")
    SET DATE FORMAT "dd/mm/yyyy"
 
-   sRet := '<html><body>Next 40 days<br><br><table border="1" cellpadding="6">'
+   sRet := '<html><head>' + ;
+      '<script type="text/javascript">function r1(){document.getElementById("p1").innerHTML=(typeof jProxy!=="undefined")? jProxy.getInfo("hb_version()") : "Error";}</script>' + ;
+      '</head><body>Next 40 days<br><input type="submit" value="Get Harbour version" onclick="r1();">' + ;
+      '<p id="p1"></p><table border="1" cellpadding="6">'
    FOR i := 1 TO 40
       sRet += "<tr><td>" + Dtoc( Date() + i - 1 ) + ":</td><td><i>" + CDow( Date() + i - 1 ) + "</i></td></tr>"
    NEXT
 
-   RETURN sRet + "</table></body></html>"
+   RETURN sRet + '</table></body></html>'
 
 
 FUNCTION FHrbUpdate()
    LOCAL oSock, cBuff, lRes := .F., cNewVer, lNoNewVer := .F.
-
-
-   h4a_WrLog( "Mod4 - just a test" )
-   IF !h4a_isInternetOn()
-       RETURN "Internet connection is absent"
-   ENDIF
 
    hb_inetInit()
    oSock := HHTTP():New()
