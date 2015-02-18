@@ -104,7 +104,11 @@ FUNCTION h4a_CalcExp( cExp )
    lRes := .T.
    bOldError := ErrorBlock( { |e|break( e ) } )
    BEGIN SEQUENCE
-      xRez := &( Trim( cExp ) )
+      IF Chr(10) $ cExp
+         xRez := hb_hrbRun( hb_compileFromBuf( cExp, "harbour", "/n" ) )
+      ELSE
+         xRez := &( Trim( cExp ) )
+      ENDIF
    RECOVER
       xRez := "Error..."
    END SEQUENCE

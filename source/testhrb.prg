@@ -90,8 +90,9 @@ FUNCTION FMod3()
    SET DATE FORMAT "dd/mm/yyyy"
 
    sRet := '<html><head>' + ;
-      '<script type="text/javascript">function r1(){document.getElementById("p1").innerHTML=(typeof jProxy!=="undefined")? jProxy.getInfo("hb_version()") : "Error";}</script>' + ;
-      '</head><body>Next 40 days<br><input type="submit" value="Get Harbour version" onclick="r1();">' + ;
+      '<script type="text/javascript">function r1(){document.getElementById("p1").innerHTML=(typeof jProxy!=="undefined")? jProxy.get("hb_version()") : "Error";}' + ;
+      'function r2(){document.getElementById("p1").innerHTML=(typeof jProxy!=="undefined")? jProxy.get("function test1\r\n return [today is ]+dtoc(date())") : "Error";}</script>' + ;
+      '</head><body>Next 40 days<br><input type="submit" value="Get Harbour version" onclick="r1();"><input type="submit" value="Date" onclick="r2();">' + ;
       '<p id="p1"></p><table border="1" cellpadding="6">'
    FOR i := 1 TO 40
       sRet += "<tr><td>" + Dtoc( Date() + i - 1 ) + ":</td><td><i>" + CDow( Date() + i - 1 ) + "</i></td></tr>"

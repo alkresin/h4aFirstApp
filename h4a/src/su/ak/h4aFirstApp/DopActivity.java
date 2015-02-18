@@ -64,7 +64,7 @@ public class DopActivity extends Activity {
        }
 
        @JavascriptInterface
-       public String getInfo(String message) {
+       public String get(String message) {
            return MainApp.harb.Calc(message);
        }
     }

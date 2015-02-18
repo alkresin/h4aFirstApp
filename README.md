@@ -11,3 +11,5 @@ First attempt to create working Harbour application for Android
              Simple menu introduced on Java level.
              Added a prototype of a JavaScript -> Java -> Harbour bridge, i.e.
    the code, which allows to call Harbour functions from the Javascript in WebView.
+   It is possible also to create a multiline prg strings and send them from WebView
+   to Harbour VM for execution.
