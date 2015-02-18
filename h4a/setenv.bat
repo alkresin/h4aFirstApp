@@ -1,6 +1,6 @@
-@set ANDROID_HOME=c:\Android\sdk
-@set BUILD_TOOLS=%ANDROID_HOME%\build-tools\19.1.0
-@set NDK_HOME=c:\Android\android-ndk-r10d
+@set ANDROID_HOME=e:\Android\sdk
+@set BUILD_TOOLS=%ANDROID_HOME%\build-tools\21.1.2
+@set NDK_HOME=e:\Android\android-ndk-r10d
 @set JAVA_HOME=C:\PROGRA~1\java\jdk1.7.0_71
 
 @set ADB=%ANDROID_HOME%\platform-tools\adb.exe

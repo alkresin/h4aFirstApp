@@ -1,13 +1,14 @@
 
-#define HRB_VERSION 4
+#define HRB_VERSION 5
 
 FUNCTION FModList()
    RETURN "TestHrb v." + Ltrim(Str(HRB_VERSION)) + Chr(13)+Chr(10) + ;
           "Select from menu:" + Chr(13)+Chr(10) + Chr(13)+Chr(10) + ;
-          "Mod **LetoDb state**" + Chr(13)+Chr(10) + ;
-          "Mod **Test db functions**" + Chr(13)+Chr(10) + ;
-          "Mod **Html table**" + Chr(13)+Chr(10) + ;
-          "Mod **Update program**" + Chr(13)+Chr(10)
+          "  **LetoDb state**" + Chr(13)+Chr(10) + ;
+          "  **Test db functions**" + Chr(13)+Chr(10) + ;
+          "  **Html test**" + Chr(13)+Chr(10) + ;
+          "  **HDroidGUI news**" + Chr(13)+Chr(10) + ;
+          "  **Update program**" + Chr(13)+Chr(10)
 
 FUNCTION FModExec( iMod )
 
@@ -18,6 +19,8 @@ FUNCTION FModExec( iMod )
    ELSEIF iMod == 3
       RETURN FMod3()
    ELSEIF iMod == 4
+      RETURN FMod4()
+   ELSEIF iMod == 5
       RETURN FHrbUpdate()
    ENDIF
 
@@ -26,6 +29,10 @@ FUNCTION FModExec( iMod )
 FUNCTION FMod1()
 
    LOCAL sRet := "", cPath := "//95.80.77.43:2812/", aInfo, nSec, nDay, nHour
+
+   IF !h4a_isInternetOn()
+       RETURN "Internet connection is absent"
+   ENDIF
 
    IF ( leto_Connect( cPath ) ) == -1
        RETURN "LetoDb server on " + cPath + " is currently unavailable"
@@ -55,6 +62,10 @@ FUNCTION FMod2()
 
    LOCAL sRet, cPath := "//95.80.77.43:2812/"
 
+   IF !h4a_isInternetOn()
+       RETURN "Internet connection is absent"
+   ENDIF
+
    IF ( leto_Connect( cPath ) ) == -1
        RETURN "LetoDb server on " + cPath + " is currently unavailable"
    ENDIF
@@ -82,27 +93,51 @@ FUNCTION FMod3()
 
    LOCAL sRet, i
 
-   IF !__mvExist( "H4AVERSION" )
-      RETURN "You need to get the latest h4aFirstApp.apk to see this section!"
-   ENDIF
-
-   h4a_Wrlog("Mod3")
    SET DATE FORMAT "dd/mm/yyyy"
 
    sRet := '<html><head>' + ;
       '<script type="text/javascript">function r1(){document.getElementById("p1").innerHTML=(typeof jProxy!=="undefined")? jProxy.get("hb_version()") : "Error";}' + ;
       'function r2(){document.getElementById("p1").innerHTML=(typeof jProxy!=="undefined")? jProxy.get("function test1\r\n return [today is ]+dtoc(date())") : "Error";}</script>' + ;
-      '</head><body>Next 40 days<br><input type="submit" value="Get Harbour version" onclick="r1();"><input type="submit" value="Date" onclick="r2();">' + ;
-      '<p id="p1"></p><table border="1" cellpadding="6">'
-   FOR i := 1 TO 40
+      '</head><body><input type="submit" value="Get Harbour version" onclick="r1();"><input type="submit" value="Date" onclick="r2();">' + ;
+      '<p id="p1"></p>Next 20 days<table border="1" cellpadding="6">'
+   FOR i := 1 TO 20
       sRet += "<tr><td>" + Dtoc( Date() + i - 1 ) + ":</td><td><i>" + CDow( Date() + i - 1 ) + "</i></td></tr>"
    NEXT
 
    RETURN sRet + '</table></body></html>'
 
 
+FUNCTION FMod4()
+
+   LOCAL oSock, cBuff, lRes := .F.
+
+   IF !h4a_isInternetOn()
+       RETURN "Internet connection is absent"
+   ENDIF
+
+   hb_inetInit()
+   oSock := HHTTP():New()
+
+   IF !Empty( cBuff := oSock:Get( "www.kresin.ru/en/hdgnews.html" ) )
+      lRes := .T.
+   ENDIF
+
+   oSock:Close()
+   hb_inetCleanup()
+
+   IF lRes
+      RETURN cBuff
+   ENDIF
+
+   RETURN "Can't get information"
+
+
 FUNCTION FHrbUpdate()
    LOCAL oSock, cBuff, lRes := .F., cNewVer, lNoNewVer := .F.
+
+   IF !h4a_isInternetOn()
+       RETURN "Internet connection is absent"
+   ENDIF
 
    hb_inetInit()
    oSock := HHTTP():New()
