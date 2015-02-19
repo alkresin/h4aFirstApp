@@ -12,6 +12,8 @@ import android.webkit.JavascriptInterface;
 
 public class DopActivity extends Activity {
 
+    public WebView web;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +23,7 @@ public class DopActivity extends Activity {
         setTitle(MainActivity.sHrbName);
         if( sText.length() > 4 && sText.substring( 0,5 ).equals( "<html" ) ) {
 
-           WebView web = new WebView(this);
+           web = new WebView(this);
 
            WebSettings settings = web.getSettings();
            settings.setBuiltInZoomControls(false);
@@ -60,12 +62,13 @@ public class DopActivity extends Activity {
        private Context context = null;
 
        public JSProxy(Context c) {
-           context = c;
+          context = c;
        }
 
        @JavascriptInterface
        public String get(String message) {
-           return MainApp.harb.Calc(message);
+          MainApp.harb.setWebView( web );
+          return MainApp.harb.Calc(message);
        }
     }
 }

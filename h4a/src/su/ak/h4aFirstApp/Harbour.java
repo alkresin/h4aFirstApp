@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.IOException;
 import java.io.FileOutputStream;
 import android.content.Context;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import android.net.ConnectivityManager;
@@ -17,13 +18,16 @@ import android.util.Log;
 public class Harbour {
 
     private final static String HRB = "testhrb.hrb";
-    public static Context context;
-    public static String cHomePath;
+    private static Context context;
+    private static Harbour hbobj;
+    private static String cHomePath;
+    private static WebView web;
 
     public Harbour( Context cont ) {
        context = cont;
        cHomePath = context.getFilesDir() + "/";
        setHomePath( cHomePath );
+       hbobj = this;
     }
 
     public native void vmInit();
@@ -34,11 +38,16 @@ public class Harbour {
     public native String hrbOpen();
     public native String hrbMod( int iMod );
 
-    public void CopyFromAsset() {
+    public void Init() {
+       vmInit();
+       CopyFromAsset( HRB );
+    }
 
-       String sFile = cHomePath + HRB;
+    public static void CopyFromAsset( String hrbName ) {
 
-       setHrb( HRB );
+       String sFile = cHomePath + hrbName;
+
+       hbobj.setHrb( hrbName );
 
        if( ! (new File(sFile).isFile()) ) {
           try {
@@ -62,6 +71,10 @@ public class Harbour {
        }
     }
 
+    public static void setWebView( WebView wv ) {
+       web = wv;
+    }
+
     public static boolean isInternetOn() {
 
        ConnectivityManager connectivity = 
@@ -77,6 +90,11 @@ public class Harbour {
                 }
        }
        return false;
+    }
+
+    public static void webload( String sText ) {
+
+       web.loadDataWithBaseURL(null, sText, "text/html", "utf-8", null);
     }
 
     public static void hlog( String message ) {

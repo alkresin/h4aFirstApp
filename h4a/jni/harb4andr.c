@@ -38,6 +38,18 @@ HB_FUNC( H4A_WRLOG )
 
 }
 
+HB_FUNC( H4A_WEBLOAD )
+{
+
+   jclass cls = (*h_env)->GetObjectClass( h_env, h_thiz );
+
+   jmethodID mid = (*h_env)->GetStaticMethodID( h_env, cls, "webload", "(Ljava/lang/String;)V" );
+
+   if( mid )
+      (*h_env)->CallStaticVoidMethod( h_env, cls, mid, (*h_env)->NewStringUTF( h_env, hb_parc(1) ) );
+
+}
+
 void Java_su_ak_h4aFirstApp_Harbour_vmInit( JNIEnv* env, jobject thiz )
 {
 

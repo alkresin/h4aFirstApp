@@ -12,8 +12,7 @@ public class MainApp extends Application {
 
       harb = new Harbour( this );
 
-      harb.vmInit();
-      harb.CopyFromAsset();
+      harb.Init();
 
    }
 }

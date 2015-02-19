@@ -42,7 +42,7 @@ public class MainActivity extends Activity
         CharSequence stext = setSpans( MainApp.harb.hrbOpen(), "**" );
         mOutputView.setText( stext );
     }
-
+/*
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -50,7 +50,7 @@ public class MainActivity extends Activity
         //System.runFinalizersOnExit(true);
         //android.os.Process.killProcess(android.os.Process.myPid());
     }
-
+*/
     private CharSequence setSpans( CharSequence text, String token )
     {
        int tokenLen = token.length();
