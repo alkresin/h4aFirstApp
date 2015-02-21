@@ -7,6 +7,7 @@ FUNCTION FModList()
           "  **LetoDb state**" + Chr(13)+Chr(10) + ;
           "  **Test db functions**" + Chr(13)+Chr(10) + ;
           "  **Html test**" + Chr(13)+Chr(10) + ;
+          "  **Get System Directories**" + Chr(13)+Chr(10) + ;
           "  **HDroidGUI news**" + Chr(13)+Chr(10) + ;
           "  **Update program**" + Chr(13)+Chr(10)
 
@@ -19,8 +20,10 @@ FUNCTION FModExec( iMod )
    ELSEIF iMod == 3
       RETURN FMod3()
    ELSEIF iMod == 4
-      RETURN FMod4()
+      RETURN FModDirs()
    ELSEIF iMod == 5
+      RETURN FModNews()
+   ELSEIF iMod == 6
       RETURN FHrbUpdate()
    ENDIF
 
@@ -107,7 +110,14 @@ FUNCTION FMod3()
    RETURN sRet + '</table></body></html>'
 
 
-FUNCTION FMod4()
+FUNCTION FModDirs()
+
+   RETURN h4a_getSysDir("ext") + Chr(13)+Chr(10) + h4a_getSysDir("doc") + Chr(13)+Chr(10) + ;
+          h4a_getSysDir("pic") + Chr(13)+Chr(10) + h4a_getSysDir("mus") + Chr(13)+Chr(10) + ;
+          h4a_getSysDir("down") + Chr(13)+Chr(10) + h4a_getSysDir("ring") + Chr(13)+Chr(10) + ;
+          h4a_homedir()
+
+FUNCTION FModNews()
 
    LOCAL oSock, cBuff, lRes := .F.
 

@@ -1,5 +1,6 @@
 package su.ak.h4aFirstApp;
 
+import android.os.Environment;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -100,6 +101,25 @@ public class Harbour {
     public static void hlog( String message ) {
 
        Log.i("Harbour", message);
+    }
+
+    public static String getSysDir( String type ) {
+       if( type.equals( "doc" ) )
+          return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/";
+       else if( type.equals( "pic" ) )
+          return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/";
+       else if( type.equals( "mus" ) )
+          return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC) + "/";
+       else if( type.equals( "mov" ) )
+          return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES) + "/";
+       else if( type.equals( "down" ) )
+          return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/";
+       else if( type.equals( "ring" ) )
+          return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_RINGTONES ) + "/";
+       else if( type.equals( "ext" ) )
+          return Environment.getExternalStorageDirectory() + "/";
+       else
+          return "";
     }
 
     static {

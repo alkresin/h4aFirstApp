@@ -4,6 +4,9 @@ First attempt to create working Harbour application for Android
 
 #### Changelog:
 
+2015-02-20:  h4a_getSysDir( cType ) Harbour function implemented, which returns some
+   Android public directories.
+
 2015-02-19:  h4a_Webload( cWebPage ) Harbour function added, which allows to load
    new web content into the WebView.
 

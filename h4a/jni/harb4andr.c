@@ -50,6 +50,23 @@ HB_FUNC( H4A_WEBLOAD )
 
 }
 
+HB_FUNC( H4A_GETSYSDIR )
+{
+   char * szRet;
+   char * szFunc = "getSysDir";
+   jstring jsRet;
+   jclass cls = (*h_env)->GetObjectClass( h_env, h_thiz );
+
+   jmethodID mid = (*h_env)->GetStaticMethodID( h_env, cls, szFunc, "(Ljava/lang/String;)Ljava/lang/String;" );
+
+   if( mid ) {
+      jsRet = (jstring)(*h_env)->CallStaticObjectMethod( h_env, cls, mid, (*h_env)->NewStringUTF( h_env, hb_parc(1) ) );
+      szRet = (char*)(*h_env)->GetStringUTFChars( h_env, jsRet, NULL );
+      hb_retc( szRet );
+      (*h_env)->ReleaseStringUTFChars( h_env, jsRet, szRet );
+   }
+}
+
 void Java_su_ak_h4aFirstApp_Harbour_vmInit( JNIEnv* env, jobject thiz )
 {
 
