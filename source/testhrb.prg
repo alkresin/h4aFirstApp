@@ -1,5 +1,5 @@
 
-#define HRB_VERSION 5
+#define HRB_VERSION 6
 
 FUNCTION FModList()
    RETURN "TestHrb v." + Ltrim(Str(HRB_VERSION)) + Chr(13)+Chr(10) + ;
