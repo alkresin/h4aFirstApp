@@ -4,7 +4,7 @@
 @del /q h4a\*.keystore
 @del /s /f /q bin\*.*
 
-@harbour source\testhrb.prg /gh /q /ic:\harbour\include /oh4a\assets\
+@harbour source\testhrb.prg /gh /q /i%HRB_INC% /oh4a\assets\
 @if errorlevel 1 goto end
 
 @cd h4a
