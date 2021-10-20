@@ -1,5 +1,9 @@
 #!/bin/bash
 . ./setenv.sh
+if ! [ -e bin ]; then
+   mkdir bin
+   chmod a+w+r+x bin
+fi
 
 $BUILD_TOOLS/aapt package -f -m -S res -J src -M AndroidManifest.xml -I $ANDROID_JAR
 if [ "$?" -eq 0 ]
