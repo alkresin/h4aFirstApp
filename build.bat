@@ -1,3 +1,5 @@
+if not exist bin md bin
+if not exist h4a\assets md h4a\assets
 @call h4a/setenv
 
 @del /q h4a\assets\*.*
@@ -9,9 +11,9 @@
 
 @cd h4a
 call %BUILD_TOOLS%/aapt.exe package -f -M AndroidManifest.xml -S res -I %ANDROID_JAR% -F ../bin/%APPNAME%.unsigned.apk bin
-call %BUILD_TOOLS%/aapt.exe add ../bin/%APPNAME%.unsigned.apk lib/armeabi/libharbour.so
+call %BUILD_TOOLS%/aapt.exe add ../bin/%APPNAME%.unsigned.apk lib/%NDK_TARGET%/libharbour.so
 @if errorlevel 1 goto end
-call %BUILD_TOOLS%/aapt.exe add ../bin/%APPNAME%.unsigned.apk lib/armeabi/libharb4andr.so
+call %BUILD_TOOLS%/aapt.exe add ../bin/%APPNAME%.unsigned.apk lib/%NDK_TARGET%/libharb4andr.so
 call %BUILD_TOOLS%/aapt.exe add ../bin/%APPNAME%.unsigned.apk assets/testhrb.hrb
 
 @rem sign APK

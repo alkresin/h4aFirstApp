@@ -5,14 +5,6 @@ if ! [ -e bin ]; then
    mkdir bin
    chmod a+w+r+x bin
 fi
-if ! [ -e obj ]; then
-   mkdir obj
-   chmod a+w+r+x obj
-fi
-if ! [ -e lib ]; then
-   mkdir lib
-   chmod a+w+r+x lib
-fi
 
 ./clear.sh
 ./ndkbuild.sh

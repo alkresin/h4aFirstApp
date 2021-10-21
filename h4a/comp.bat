@@ -1,3 +1,4 @@
+if not exist bin md bin
 @call setenv
 
 @rem create R.java
